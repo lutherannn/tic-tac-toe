@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <iostream>
 using namespace std;
 
@@ -32,16 +33,37 @@ bool checkWin()
 
 void userTurn()
 {
-    // TODO: process user turn
+    bool validUserTurn = false;
+    while (!validUserTurn)
+    {
+    }
 }
 
 void cpuTurn()
 {
-    // TODO: process CPU turn
+    bool validCpuTurn = false;
+    while (!validCpuTurn)
+    {
+        int cpuChoice = rand() % 10;
+        if (cpuChoice == 0)
+        {
+            board[0] = "O";
+            validCpuTurn = true;
+        }
+        if (board[cpuChoice - 1] == "*")
+        {
+            board[cpuChoice - 1] = "O";
+            validCpuTurn = true;
+        }
+    }
+    validCpuTurn = false;
 }
 
 int main()
 {
+    srand(time(0));
+    clear();
+    cpuTurn();
     printBoard();
     return 0;
 }
