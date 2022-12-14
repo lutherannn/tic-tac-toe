@@ -42,41 +42,39 @@ def cpuTurn():
     board[random.choice(getIndexes(board, "*"))] = "O"
 
 
-def checkWin(player):
-    if player == "u":
-        if "".join(board[0:3]) == "XXX":
-            return "u"
-        if "".join(board[3:6]) == "XXX":
-            return "u"
-        if "".join(board[6:9]) == "XXX":
-            return "u"
-        if board[0] == "X" and board[4] == "X" and board[8] == "X":
-            return "u"
-        if board[2] == "X" and board[4] == "X" and board[6] == "X":
-            return "u"
-        if board[1] == "X" and board[4] == "X" and board[7] == "X":
-            return "u"
-        if board[0] == "X" and board[3] == "X" and board[6] == "X":
-            return "u"
-        if board[2] == "X" and board[5] == "X" and board[8] == "X":
-            return "u"
-    if player == "c":
-        if "".join(board[0:3]) == "OOO":
-            return "c"
-        if "".join(board[3:6]) == "OOO":
-            return "c"
-        if "".join(board[6:9]) == "OOO":
-            return "c"
-        if board[0] == "O" and board[4] == "O" and board[8] == "O":
-            return "c"
-        if board[2] == "O" and board[4] == "O" and board[6] == "O":
-            return "c"
-        if board[1] == "O" and board[4] == "O" and board[7] == "O":
-            return "c"
-        if board[0] == "O" and board[3] == "O" and board[6] == "O":
-            return "c"
-        if board[2] == "O" and board[5] == "O" and board[8] == "O":
-            return "c"
+def checkWin():
+    if "".join(board[0:3]) == "XXX":
+        return "u"
+    if "".join(board[3:6]) == "XXX":
+        return "u"
+    if "".join(board[6:9]) == "XXX":
+        return "u"
+    if board[0] == "X" and board[4] == "X" and board[8] == "X":
+        return "u"
+    if board[2] == "X" and board[4] == "X" and board[6] == "X":
+        return "u"
+    if board[1] == "X" and board[4] == "X" and board[7] == "X":
+        return "u"
+    if board[0] == "X" and board[3] == "X" and board[6] == "X":
+        return "u"
+    if board[2] == "X" and board[5] == "X" and board[8] == "X":
+        return "u"
+    if "".join(board[0:3]) == "OOO":
+        return "c"
+    if "".join(board[3:6]) == "OOO":
+        return "c"
+    if "".join(board[6:9]) == "OOO":
+        return "c"
+    if board[0] == "O" and board[4] == "O" and board[8] == "O":
+        return "c"
+    if board[2] == "O" and board[4] == "O" and board[6] == "O":
+        return "c"
+    if board[1] == "O" and board[4] == "O" and board[7] == "O":
+        return "c"
+    if board[0] == "O" and board[3] == "O" and board[6] == "O":
+        return "c"
+    if board[2] == "O" and board[5] == "O" and board[8] == "O":
+        return "c"
     if "*" not in board:
         return "d"
 
@@ -97,19 +95,18 @@ while not done:
     cpuTurn()
     clear()
     printBoard()
-    if checkWin("c") == "c":
+    if checkWin() == "c":
         print("CPU Wins")
         sys.exit()
-    if checkWin("c") == "d":
+    if checkWin() == "d":
         print("Tie!")
         sys.exit()
     userTurn()
     clear()
     printBoard()
-    if checkWin("u") == "u":
+    if checkWin() == "u":
         print("You win!")
         sys.exit()
-    if checkWin("u") == "d":
+    if checkWin() == "d":
         print("Tie!")
         sys.exit()
-    userTurn()
