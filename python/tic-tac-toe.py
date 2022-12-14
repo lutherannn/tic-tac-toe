@@ -1,5 +1,6 @@
 import random
 import os
+import sys
 
 
 def clear():
@@ -41,6 +42,45 @@ def cpuTurn():
     board[random.choice(getIndexes(board, "*"))] = "O"
 
 
+def checkWin(player):
+    if player == "u":
+        if "".join(board[0:3]) == "XXX":
+            return "u"
+        if "".join(board[3:6]) == "XXX":
+            return "u"
+        if "".join(board[6:9]) == "XXX":
+            return "u"
+        if board[0] == "X" and board[4] == "X" and board[8] == "X":
+            return "u"
+        if board[2] == "X" and board[4] == "X" and board[6] == "X":
+            return "u"
+        if board[1] == "X" and board[4] == "X" and board[7] == "X":
+            return "u"
+        if board[0] == "X" and board[3] == "X" and board[6] == "X":
+            return "u"
+        if board[2] == "X" and board[5] == "X" and board[8] == "X":
+            return "u"
+    if player == "c":
+        if "".join(board[0:3]) == "OOO":
+            return "c"
+        if "".join(board[3:6]) == "OOO":
+            return "c"
+        if "".join(board[6:9]) == "OOO":
+            return "c"
+        if board[0] == "O" and board[4] == "O" and board[8] == "O":
+            return "c"
+        if board[2] == "O" and board[4] == "O" and board[6] == "O":
+            return "c"
+        if board[1] == "O" and board[4] == "O" and board[7] == "O":
+            return "c"
+        if board[0] == "O" and board[3] == "O" and board[6] == "O":
+            return "c"
+        if board[2] == "O" and board[5] == "O" and board[8] == "O":
+            return "c"
+    if "*" not in board:
+        return "d"
+
+
 board = ["*", "*", "*", "*", "*", "*", "*", "*", "*"]
 done = False
 
@@ -52,10 +92,24 @@ print(
 userChoice = int(input("Choose square to put first X: "))
 board[userChoice - 1] = "X"
 
-for _ in range(5):
+
+while not done:
     cpuTurn()
     clear()
     printBoard()
+    if checkWin("c") == "c":
+        print("CPU Wins")
+        sys.exit()
+    if checkWin("c") == "d":
+        print("Tie!")
+        sys.exit()
     userTurn()
     clear()
     printBoard()
+    if checkWin("u") == "u":
+        print("You win!")
+        sys.exit()
+    if checkWin("u") == "d":
+        print("Tie!")
+        sys.exit()
+    userTurn()
