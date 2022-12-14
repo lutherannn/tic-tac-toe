@@ -12,30 +12,50 @@ def printBoard():
     )
 
 
-# This doesn't work, idk why. it's 4:30 in the morning and i cba to figure it out. never enters the if statement.
+# I'm not proud of this, lol. but it's what i can figure out for now...
+# Some nerd: uhm accccshually it's indices
+def getIndexes(lst, item):
+    r = []
+    for x in lst:
+        if x == item:
+            r.append(lst.index(x))
+            lst[lst.index(x)] = "A"
+    for x in lst:
+        if x == "A":
+            lst[lst.index(x)] = "*"
+    return r
+
+
+def userTurn():
+    validUserTurn = False
+    while not validUserTurn:
+        userChoice = int(input("Choose square to put your X: "))
+        if userChoice - 1 in getIndexes(board, "*"):
+            board[userChoice - 1] = "X"
+            validUserTurn = True
+        else:
+            print("Square already taken.")
+
+
 def cpuTurn():
-    validCpuChoice = False
-    while not validCpuChoice:
-        cpuChoice = random.randrange(0, 9)
-        if board[cpuChoice] == "*":
-            board[cpuChoice] = "O"
-            validCpuChoice = True
-            break
+    board[random.choice(getIndexes(board, "*"))] = "O"
 
 
-clear()
 board = ["*", "*", "*", "*", "*", "*", "*", "*", "*"]
 done = False
 
+clear()
 printBoard()
 print(
     "Grid numbers are 1-9 with the upper left corner being 1, working from left to right."
 )
 userChoice = int(input("Choose square to put first X: "))
 board[userChoice - 1] = "X"
-printBoard()
 
-# while not done:
-for _ in range(10):
+for _ in range(5):
     cpuTurn()
-    done = True
+    clear()
+    printBoard()
+    userTurn()
+    clear()
+    printBoard()

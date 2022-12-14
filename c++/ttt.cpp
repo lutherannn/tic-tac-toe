@@ -41,15 +41,19 @@ void userTurn()
 
 void cpuTurn()
 {
+    // note to self: make an array/list/vector/whatever the fuck of indexes that are taken on the board, and have it choose from that instead.
+    // probably be easier than whatever the fuck i'm doing
     bool validCpuTurn = false;
     while (!validCpuTurn)
     {
         int cpuChoice = rand() % 10;
+
         if (cpuChoice == 0)
         {
             board[0] = "O";
             validCpuTurn = true;
         }
+
         if (board[cpuChoice - 1] == "*")
         {
             board[cpuChoice - 1] = "O";
@@ -63,6 +67,8 @@ int main()
 {
     srand(time(0));
     clear();
+    cpuTurn();
+    printBoard();
     cpuTurn();
     printBoard();
     return 0;
