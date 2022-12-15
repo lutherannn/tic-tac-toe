@@ -7,6 +7,7 @@
 using namespace std;
 
 string board[] = {"*", "*", "*", "*", "*", "*", "*", "*", "*"};
+vector<int> legalSquares = {};
 
 void clear()
 {
@@ -34,9 +35,21 @@ string checkWin()
     return "u";
 }
 
+void getLegalSquares()
+{
+    for (int i = 0; i < sizeof(board) / sizeof(board[0]); i++)
+    {
+        if (board[i] == "*")
+        {
+            legalSquares.push_back(i);
+        }
+    }
+}
+
 void userTurn()
 {
     bool validUserTurn = false;
+    getLegalSquares();
     while (!validUserTurn)
     {
     }
@@ -44,12 +57,20 @@ void userTurn()
 
 void cpuTurn()
 {
-    vector<int> allowedChoices = {};
-    for (int i = 0; sizeof(board); i++)
+    bool validCpuTurn = false;
+    getLegalSquares();
+    while (!validCpuTurn)
     {
-        if (board[i] == "*")
+        srand(time(0));
+        int cpuChoice = rand() % legalSquares.size();
+        if (find(legalSquares.begin(), legalSquares.end(), cpuChoice) != legalSquares.end())
         {
-            // allowedChoices.push_back(i);
+            board[cpuChoice] = "O";
+            validCpuTurn = true;
+        }
+        else
+        {
+            cout << "fuck.";
         }
     }
 }
@@ -57,7 +78,7 @@ void cpuTurn()
 int main()
 {
     clear();
-    cpuTurn();
     printBoard();
+    clear();
     return 0;
 }
