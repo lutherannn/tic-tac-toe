@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <time.h>
 #include <iostream>
+#include <vector>
+#include <algorithm>
+#include <random>
 using namespace std;
 
 string board[] = {"*", "*", "*", "*", "*", "*", "*", "*", "*"};
@@ -25,10 +28,10 @@ void printBoard()
     }
 }
 
-bool checkWin()
+string checkWin()
 {
     // TODO: check for winner
-    return true;
+    return "u";
 }
 
 void userTurn()
@@ -41,34 +44,19 @@ void userTurn()
 
 void cpuTurn()
 {
-    // note to self: make an array/list/vector/whatever the fuck of indexes that are taken on the board, and have it choose from that instead.
-    // probably be easier than whatever the fuck i'm doing
-    bool validCpuTurn = false;
-    while (!validCpuTurn)
+    vector<int> allowedChoices = {};
+    for (int i = 0; sizeof(board); i++)
     {
-        int cpuChoice = rand() % 10;
-
-        if (cpuChoice == 0)
+        if (board[i] == "*")
         {
-            board[0] = "O";
-            validCpuTurn = true;
-        }
-
-        if (board[cpuChoice - 1] == "*")
-        {
-            board[cpuChoice - 1] = "O";
-            validCpuTurn = true;
+            // allowedChoices.push_back(i);
         }
     }
-    validCpuTurn = false;
 }
 
 int main()
 {
-    srand(time(0));
     clear();
-    cpuTurn();
-    printBoard();
     cpuTurn();
     printBoard();
     return 0;

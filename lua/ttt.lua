@@ -133,6 +133,7 @@ while true do
     end
     if checkWin() == "d" then
         print("Tie!")
+        os.exit()
     end
     cpuTurn()
     clear()
@@ -143,5 +144,6 @@ while true do
     end
     if checkWin() == "d" then
         print("Tie!")
+        os.exit()
     end
 end
