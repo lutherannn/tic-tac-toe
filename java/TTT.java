@@ -1,10 +1,12 @@
 package ttt;
 
 import java.util.Arrays;
+import java.util.Scanner;
+import java.util.Random;
 
 public class TTT {
 	
-	public static String[] board = {"X", "*", "*", "*", "*", "*", "*", "*", "O"};
+	public static String[] board = {"*", "*", "*", "*", "*", "*", "*", "*", "*"};
 	public static int[] legalSquares = {};
 	public static boolean validChoice = false;
 	
@@ -41,14 +43,35 @@ public class TTT {
 	
 	public static void userTurn() {
 		while (!validChoice) {
+			Scanner userInput = new Scanner(System.in);
+			System.out.print("Enter square to put your X: ");
+			int userChoice = userInput.nextInt();
+			userChoice--;
+			
+			if (board[userChoice] == "*") {
+				board[userChoice] = "X";
+				validChoice = true;
+			} else {
+				System.out.println("Square not valid or already taken.");
+			}
 			
 		}
+		validChoice = false;
+	}
+	
+	public static void cpuTurn() {
+		getIndexes();
+		while (!validChoice) {
+			int cpuChoice = new Random().nextInt(legalSquares.length);
+			board[cpuChoice] = "O";
+			validChoice = true;
+		}
+		validChoice = false;
 	}
 	
 	public static void main(String[] args) {
-		clear();
-		getIndexes();
-		System.out.println(Arrays.toString(legalSquares));
+		cpuTurn();
+		printBoard();
 	}
 
 }
