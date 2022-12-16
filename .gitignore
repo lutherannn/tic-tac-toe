@@ -2,3 +2,5 @@
 *.exe
 test.cpp
 __pycache__
+moveclass.bat
+*.stackdump

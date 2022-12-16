@@ -7,7 +7,7 @@
 using namespace std;
 
 string board[] = {"*", "*", "*", "*", "*", "*", "*", "*", "*"};
-vector<int> legalSquares = {};
+vector<int> legalSquares;
 
 void clear()
 {
@@ -17,7 +17,7 @@ void clear()
 void printBoard()
 {
     int newlCounter = 0;
-    for (int x = 0; x <= sizeof(board); x++)
+    for (int x = 0; x < sizeof(board) / sizeof(board[0]); x++)
     {
         newlCounter++;
         cout << board[x];
@@ -50,8 +50,21 @@ void userTurn()
 {
     bool validUserTurn = false;
     getLegalSquares();
+    int userChoice;
     while (!validUserTurn)
     {
+        cout << "Enter square to put your X: ";
+        cin >> userChoice;
+        userChoice--;
+        if (board[userChoice] == "*")
+        {
+            board[userChoice] = "X";
+            validUserTurn = true;
+        }
+        else
+        {
+            cout << "Square not valid or already taken";
+        }
     }
 }
 
@@ -59,9 +72,10 @@ void cpuTurn()
 {
     bool validCpuTurn = false;
     getLegalSquares();
+    srand(time(0));
+
     while (!validCpuTurn)
     {
-        srand(time(0));
         int cpuChoice = rand() % legalSquares.size();
         if (find(legalSquares.begin(), legalSquares.end(), cpuChoice) != legalSquares.end())
         {
@@ -70,15 +84,16 @@ void cpuTurn()
         }
         else
         {
-            cout << "fuck.";
+            cout << "test";
         }
     }
 }
 
 int main()
 {
-    clear();
+    // clear();
+    userTurn();
+    cpuTurn();
     printBoard();
-    clear();
     return 0;
 }
