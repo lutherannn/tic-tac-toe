@@ -3,6 +3,20 @@ import os
 import sys
 
 
+board = ["*", "*", "*", "*", "*", "*", "*", "*", "*"]
+wins = (
+    (0, 1, 2),
+    (3, 4, 5),
+    (6, 7, 8),
+    (0, 3, 6),
+    (1, 4, 7),
+    (2, 5, 8),
+    (0, 4, 8),
+    (2, 4, 6),
+)
+done = False
+
+
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
@@ -31,8 +45,9 @@ def userTurn():
     validUserTurn = False
     while not validUserTurn:
         userChoice = int(input("Choose square to put your X: "))
-        if userChoice - 1 in getIndexes(board, "*"):
-            board[userChoice - 1] = "X"
+        userChoice -= 1
+        if userChoice in getIndexes(board, "*"):
+            board[userChoice] = "X"
             validUserTurn = True
         else:
             print("Square already taken.")
@@ -42,45 +57,18 @@ def cpuTurn():
     board[random.choice(getIndexes(board, "*"))] = "O"
 
 
-def checkWin():
-    if "".join(board[0:3]) == "XXX":
-        return "u"
-    if "".join(board[3:6]) == "XXX":
-        return "u"
-    if "".join(board[6:9]) == "XXX":
-        return "u"
-    if board[0] == "X" and board[4] == "X" and board[8] == "X":
-        return "u"
-    if board[2] == "X" and board[4] == "X" and board[6] == "X":
-        return "u"
-    if board[1] == "X" and board[4] == "X" and board[7] == "X":
-        return "u"
-    if board[0] == "X" and board[3] == "X" and board[6] == "X":
-        return "u"
-    if board[2] == "X" and board[5] == "X" and board[8] == "X":
-        return "u"
-    if "".join(board[0:3]) == "OOO":
-        return "c"
-    if "".join(board[3:6]) == "OOO":
-        return "c"
-    if "".join(board[6:9]) == "OOO":
-        return "c"
-    if board[0] == "O" and board[4] == "O" and board[8] == "O":
-        return "c"
-    if board[2] == "O" and board[4] == "O" and board[6] == "O":
-        return "c"
-    if board[1] == "O" and board[4] == "O" and board[7] == "O":
-        return "c"
-    if board[0] == "O" and board[3] == "O" and board[6] == "O":
-        return "c"
-    if board[2] == "O" and board[5] == "O" and board[8] == "O":
-        return "c"
-    if "*" not in board:
-        return "d"
+def checkWin(inBoard, player):
+    return (
+        (inBoard[0] == player and inBoard[1] == player and inBoard[2] == player)
+        or (inBoard[3] == player and inBoard[4] == player and inBoard[5] == player)
+        or (inBoard[6] == player and inBoard[7] == player and inBoard[8] == player)
+        or (inBoard[0] == player and inBoard[3] == player and inBoard[6] == player)
+        or (inBoard[1] == player and inBoard[4] == player and inBoard[7] == player)
+        or (inBoard[2] == player and inBoard[5] == player and inBoard[8] == player)
+        or (inBoard[0] == player and inBoard[4] == player and inBoard[8] == player)
+        or (inBoard[2] == player and inBoard[4] == player and inBoard[6] == player)
+    )
 
-
-board = ["*", "*", "*", "*", "*", "*", "*", "*", "*"]
-done = False
 
 clear()
 printBoard()
@@ -95,18 +83,18 @@ while not done:
     cpuTurn()
     clear()
     printBoard()
-    if checkWin() == "c":
-        print("CPU Wins")
-        sys.exit()
-    if checkWin() == "d":
-        print("Tie!")
-        sys.exit()
+    if checkWin(board, "O"):
+        print("Cpu wins!")
+        sys.exit(0)
+    if "*" not in board:
+        print("Draw!")
+        sys.exit(0)
     userTurn()
     clear()
     printBoard()
-    if checkWin() == "u":
-        print("You win!")
-        sys.exit()
-    if checkWin() == "d":
-        print("Tie!")
-        sys.exit()
+    if checkWin(board, "X"):
+        print("User wins!")
+        sys.exit(0)
+    if "*" not in board:
+        print("Draw!")
+        sys.exit(0)

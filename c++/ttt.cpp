@@ -82,10 +82,6 @@ void cpuTurn()
             board[cpuChoice] = "O";
             validCpuTurn = true;
         }
-        else
-        {
-            cout << "test";
-        }
     }
 }
 
