@@ -16,7 +16,7 @@ local function clear()
 end
 
 local function printBoard()
-    newlCounter = 0
+    local newlCounter = 0
     for i = 1, #board do
         io.write(board[i])
         newlCounter = newlCounter + 1
@@ -28,18 +28,10 @@ local function printBoard()
     end
 end
 
-local function getIndexes()
-    for i = 1, #board do
-        if board[i] == "*" then
-            table.insert(legalSquares, i)
-        end
-    end
-end
-
 local function userTurn()
     while validChoice == false do
         io.write("Choose a square to put your X: ")
-        userChoice = io.read("*n")
+        local userChoice = io.read("*n")
 
         if board[userChoice] == "*" then
             board[userChoice] = "X"
@@ -53,7 +45,7 @@ end
 
 local function cpuTurn()
     while validChoice == false do
-        cpuChoice = math.random(#board)
+        local cpuChoice = math.random(#board)
         if board[cpuChoice] == "*" then
             board[cpuChoice] = "O"
             validChoice = true
@@ -63,6 +55,7 @@ local function cpuTurn()
 end
 
 local function checkWin()
+    local filledSpaces = 0
     if board[1] == "X" and board[2] == "X" and board[3] == "X" then
         return "u"
     end
@@ -112,13 +105,15 @@ local function checkWin()
     if board[3] == "O" and board[5] == "O" and board[7] == "O" then
         return "c"
     end
-
+    --so i didn't realize this was broke as hell lmao, but this soltuion will work in the meantime
     for i = 1, #board do
         if board[i] ~= "*" then
-            break
+            filledSpaces = filledSpaces + 1
+        end
+        if filledSpaces == 9 then
+            return "d"
         end
     end
-    return "d"
 end
 
 while true do
@@ -139,7 +134,7 @@ while true do
     clear()
     printBoard()
     if checkWin() == "c" then
-        print("You win!")
+        print("CPU wins!")
         os.exit()
     end
     if checkWin() == "d" then

@@ -83,6 +83,7 @@ void cpuTurn()
             validCpuTurn = true;
         }
     }
+
 }
 
 int main()
